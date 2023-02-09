@@ -505,5 +505,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  Rspeed: 10
+  Rspeed: 100
   camera: {fileID: 963194225}
