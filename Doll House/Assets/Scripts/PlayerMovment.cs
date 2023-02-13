@@ -4,22 +4,17 @@ public class PlayerMovment : MonoBehaviour
 {
     public float speed = 0f;
     public float Rspeed = 0f;
-    float mosPosX;
-    float newMosPosX;
-    Vector3 mousePos;
-    public GameObject camera;
-    Transform cameratransform;
-    // Start is called before the first frame update
+    float xRotation = 0f;
+    float yRotation = 0f;
+    public Transform playerBody;
+    public Transform camera;
+
     void Start()
     {
-        cameratransform = camera.transform;
-        mousePos = Input.mousePosition;
-        mosPosX = mousePos.x;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.W))
@@ -38,11 +33,14 @@ public class PlayerMovment : MonoBehaviour
         {
             transform.Translate(new Vector3(1, 0, 0) * speed * Time.deltaTime);
         }
-        mousePos = Input.mousePosition;
-        newMosPosX = mousePos.x;
-        transform.Rotate(Rspeed * Time.deltaTime * new Vector3(0, (mosPosX - newMosPosX), 0));
-        mosPosX = newMosPosX;
-        Cursor.lockState = CursorLockMode.Locked;
-
+        float mouseX = Input.GetAxis("Mouse X") * Rspeed * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * Rspeed * Time.deltaTime;
+        xRotation -= mouseX;
+        yRotation -= mouseY;
+        yRotation = Mathf.Clamp(yRotation, -40f,40f);
+        transform.localRotation = Quaternion.Euler(0f, xRotation, 0f);
+        camera.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
+        camera.Rotate(Vector3.right * mouseY);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
