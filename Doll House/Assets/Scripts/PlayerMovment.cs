@@ -9,6 +9,12 @@ public class PlayerMovment : MonoBehaviour
     public Transform playerBody;
     public Transform camera;
 
+    //Debug testing 
+    public DollMover dollmoverS;
+    public GameObject Carrie;
+    public GameObject Rune;
+    // 
+
     void Start()
     {
         Cursor.visible = false;
@@ -33,6 +39,18 @@ public class PlayerMovment : MonoBehaviour
         {
             transform.Translate(new Vector3(1, 0, 0) * speed * Time.deltaTime);
         }
+        //Debug testing
+        else if (Input.GetKey(KeyCode.J)) {
+            dollmoverS.move(Carrie, "Kitchen");
+        }
+        else if (Input.GetKey(KeyCode.K)) {
+            dollmoverS.moveRandomLocation(Rune);
+        }
+        else if (Input.GetKey(KeyCode.L)) {
+            dollmoverS.moveRandom();
+        }
+        // 
+
         float mouseX = Input.GetAxis("Mouse X") * Rspeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * Rspeed * Time.deltaTime;
         xRotation -= mouseX;
