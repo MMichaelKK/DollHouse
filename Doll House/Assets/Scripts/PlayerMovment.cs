@@ -53,7 +53,7 @@ public class PlayerMovment : MonoBehaviour
 
         float mouseX = Input.GetAxis("Mouse X") * Rspeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * Rspeed * Time.deltaTime;
-        xRotation -= mouseX;
+        xRotation += mouseX;
         yRotation -= mouseY;
         yRotation = Mathf.Clamp(yRotation, -40f,40f);
         transform.localRotation = Quaternion.Euler(0f, xRotation, 0f);

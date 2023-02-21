@@ -8,6 +8,7 @@ TagManager:
   - 'Rune '
   - Kitchen
   - BedRoom
+  - CameraPlate
   layers:
   - Default
   - TransparentFX
