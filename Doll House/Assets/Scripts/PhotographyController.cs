@@ -26,7 +26,7 @@ public class PhotographyController : MonoBehaviour
                         //add picuture to polarod
                         flashesTaken++;
                     }
-                    else if (hit.collider.tag == "Carrie")
+                    else if (hit.collider.tag == "Carrie" || hit.collider.tag == "Rune")
                     {
                         //add all dolls tags to if statement
                         //send message to doll to do something
