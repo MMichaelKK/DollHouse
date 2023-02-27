@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class PhotographyController : MonoBehaviour
 {
     public int numberOfFlashes;
-    int flashesTaken = 0;
-    public Material mat;
-    public Image test;
+    int flashesTaken = -1;
+    public Image[] displayImages;
+    public Image[] corespondingImages;
     Texture2D capture;
     // Start is called before the first frame update
     void Start()
     {
-        
+        capture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false); ;
     }
 
     // Update is called once per frame
@@ -27,15 +27,11 @@ public class PhotographyController : MonoBehaviour
                 {
                     if (hit.collider.tag == "CameraPlate")
                     {
-                        //add picuture to polarod
                         Debug.Log("'Picture'");
                         flashesTaken++;
-                        test.enabled = true;
-                        Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
-                        capture.ReadPixels(regionToRead, 0, 0, false);
-                        //capture.Apply();
-                        Sprite photoSprite = Sprite.Create(capture, new Rect(0.0f,0.0f,capture.width,capture.height), new Vector2(0.5f,0.5f),100.0f);
-                        test.sprite = photoSprite;
+                        displayImages[flashesTaken].gameObject.SetActive(true);
+                        corespondingImages[flashesTaken].gameObject.SetActive(true);
+                        StartCoroutine(CapturePhoto());
                     }
                     else if (hit.collider.tag == "Carrie" || hit.collider.tag == "Rune")
                     {
@@ -51,10 +47,18 @@ public class PhotographyController : MonoBehaviour
                 }
             }
         }
-
-        
-
     }
 
-    
+    IEnumerator CapturePhoto() {
+        yield return new WaitForEndOfFrame();
+        Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
+        capture.ReadPixels(regionToRead, 0, 0, false);
+        capture.Apply();
+        showPhoto();
+    }
+
+    void showPhoto() {
+        Sprite photoSprite = Sprite.Create(capture, new Rect(0.0f, 0.0f, capture.width, capture.height), new Vector2(0.5f, 0.5f), 100.0f);
+        displayImages[flashesTaken].sprite = photoSprite;
+    }
 }
